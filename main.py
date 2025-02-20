@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import qrcode
 from pixqrcodegen import Payload
 
 
