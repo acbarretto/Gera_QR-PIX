@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from pixqrcodegen import Payload
+#from pixqrcodegen import Payload
 
 
 #  streamlit run /Users/Andre/PagaFolha/main.py
@@ -70,8 +70,8 @@ valor = valor.replace(",",".")
 st.session_state.total += float(valor)
 
 #### Gera a Linha PIX e o QR Code
-payload = Payload(nome, chave, valor, "FSA", "1RIFsa")
-payload.gerarPayload()
+# payload = Payload(nome, chave, valor, "FSA", "1RIFsa")
+# payload.gerarPayload()
 
 col1, col2 = st.columns([1.3, 1])
 with col1:
