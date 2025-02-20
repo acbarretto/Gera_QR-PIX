@@ -1,8 +1,9 @@
 import streamlit as st
 import pandas as pd
-import pixqrcodegen
 from pixqrcodegen import Payload
 
+
+#################################################
 
 #  streamlit run /Users/Andre/PagaFolha/main.py
 
