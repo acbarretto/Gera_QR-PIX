@@ -1,10 +1,8 @@
 import streamlit as st
 import pandas as pd
-#import plotly.express as px
 import qrcode
 from pixqrcodegen import Payload
-import qrcode
-from time import sleep
+
 
 #  streamlit run /Users/Andre/PagaFolha/main.py
 
