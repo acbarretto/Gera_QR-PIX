@@ -1,0 +1,5 @@
+streamlit==1.42.1
+pandas==2.2.3
+pixqrcodegen==0.9.1
+qrcode==8.0
+
