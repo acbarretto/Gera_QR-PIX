@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 from pixqrcodegen import Payload
 
-import time
-from streamlit_javascript import st_javascript
 
 #  streamlit run /Users/Andre/PagaFolha/main.py
 
@@ -23,23 +21,7 @@ df_folha = pd.read_csv("folha.csv", sep=";")
 
 max_index = df_folha.index.max() # Pego o indice do ultimo registro da tabela
 
-###############################
-def scroll_down():
-    st_javascript("""
-        const container = parent.document.querySelector('.stDataFrame div[data-testid="stVerticalBlock"]');
-        if (container) container.scrollTop = container.scrollHeight;
-    """)
 
-# # Exibir o DataFrame no Streamlit
-# st.dataframe(df_folha, height=200)
-
-# # Adicionar botão para rolar automaticamente
-# if st.button("Forçar Scroll Down"):
-#     scroll_down()
-
-# Criando um DataFrame grande para exemplo
-#data = {'Coluna A': range(1, 101), 'Coluna B': range(101, 201)}
-df = df_folha
 
 # Inicializar o índice de exibição no session_state
 if 'row_index' not in st.session_state:
@@ -49,22 +31,9 @@ if 'row_index' not in st.session_state:
 linhas_por_pagina = 6
 
 # Atualizar o índice para rolagem automática
-#if st.button("Forçar Scroll Down"):
 def forcarScrollDown():
-    #st.write(st.session_state.row_index)
     st.session_state.row_index += linhas_por_pagina # = min(st.session_state.row_index + linhas_por_pagina, len(df) - linhas_por_pagina) #
-    time.sleep(0.5)
     st.rerun()
-
-# Exibir apenas as linhas visíveis
-#st.dataframe(df.iloc[st.session_state.row_index:st.session_state.row_index + linhas_por_pagina], height=250)
-#st.dataframe(df.iloc[st.session_state.row_index:st.session_state.row_index + max_index+1], height=250)
-
-
-###############################
-
-
-
 
 
 
@@ -73,6 +42,7 @@ def forcarScrollDown():
 if 'count' not in st.session_state:
     st.session_state.count = 0
 
+# somente para contar quantos cliques já foi dado até o scroll
 if 'count_scroll' not in st.session_state:
     st.session_state.count_scroll = 0
 
@@ -151,61 +121,3 @@ else:
     total = total.replace("_",",")
     st.title(f"Foi processado um Total de : R$ :red[{total}]")
     st.title(f"pagos a {st.session_state.count} colaboradores")
-
-
-    
-
-
-
-
-
-
-# if st.button("PAGAR"):
-#     proxPgto(cont)
-#     cont += 1
-#     print(cont)
-
-#df_folha = pd.read_csv("folha.csv", sep=";")
-
-#df_folha.iterrows()
-# btn = st.button("PAGAR")
-# while btn == True:
-
-#for index, row in df_folha.iterrows():
-    # cont += 1
-    # row = next(df_folha.iterrows())[cont]
-    # #row
-    # #print(row["CPF"])
-    # btn
-    # cpf = row['CPF']
-    # cpf = cpf.replace(".", "")
-    # cpf = cpf.replace("-", "")
-    # cpf
-    # sleep(1)
-
-    # nome = row['Nome']
-    # nome = nome.split(sep=" ")[0]
-    # nome
-    # sleep(1)
-
-    # valor = row['PAGO']
-    # valor
-    # cont += 1
-    # sleep(1)
-    # btn = False
-
-
-#price_max = df_top100_books["book price"].max()
-#price_min = df_top100_books["book price"].min()
-
-#max_price = st.sidebar.slider("Price Range", price_min, price_max, price_max)
-#df_books = df_top100_books[df_top100_books["book price"] <= max_price]
-
-#df_books
-
-#fig = px.bar(df_books["year of publication"].value_counts())
-#fig2 = px.histogram(df_books["book price"])
-
-#col1, col2 = st.columns(2)
-#col1.plotly_chart(fig)
-#col2.plotly_chart(fig2)
