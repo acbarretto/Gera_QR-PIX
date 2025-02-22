@@ -6,8 +6,8 @@ from pixqrcodegen import Payload
 #  streamlit run /Users/Andre/PagaFolha/main.py
 
 
-st.set_page_config(layout=  "wide",
-                   page_title='Executor da Folha do 1RIFsa', page_icon="🖋️")
+# st.set_page_config(layout=  "wide",
+#                    page_title='Executor da Folha do 1RIFsa', page_icon="🖋️")
 
 
 ### Título da página
@@ -68,7 +68,6 @@ if st.session_state.count <= max_index:
 
     nomes = df_folha["Nome"].unique()
     nome = nomes[st.session_state.count] 
-    #nome = st.selectbox("Colaborador", nomes)
 
     df_nome = df_folha[df_folha["Nome"] == nome]
 
@@ -85,10 +84,10 @@ if st.session_state.count <= max_index:
     sobrenome = colab_nome
     sobrenome = sobrenome.split()[-1]
 
-    valor = colab_valor
-    valor = valor.replace(".","")
-    valor = valor.replace(",",".")
-    st.session_state.total += float(valor)
+    valor = f"{colab_valor}"  # Garante que valor seja uma string
+    valor_formatado = float(valor) #.replace(".", "").replace(",", "."))  # Converte corretamente para float
+
+    st.session_state.total += valor_formatado  # Soma o valor numérico ao total
 
     #### Gera a Linha PIX e o QR Code
     payload = Payload(nome, chave, valor, "FSA", "1RIFsa")
@@ -96,13 +95,12 @@ if st.session_state.count <= max_index:
 
     col1, col2 = st.columns([2.5, 1])
     with col1:
-        #st.dataframe(df_folha, width=900, height=250)
+        # Formato o dataframe para a coluna PAGO aparecer no formato brasileiro #.###,##
+        df_folha["PAGO"] = df_folha["PAGO"].apply(lambda x: f"{x:,.2f}".replace(",", "_").replace(".", ",").replace("_", "."))
+ 
         st.dataframe(df_folha.iloc[st.session_state.row_index:st.session_state.row_index + max_index+1], width=900, height=270)
-        #df_folha.style.set_table_styles([{'selector': 'tr:hover', 'props': [('background-color', 'green'), ('color', 'black')]}])
-        total = f" {st.session_state.total:,.2f}"
-        total = total.replace(".","_")
-        total = total.replace(",",".")
-        total = total.replace("_",",")
+
+        total = f"{st.session_state.total:,.2f}".replace(",", "_").replace(".", ",").replace("_", ".")
         st.title(f"Total pago: R$ :red[{total}]")
         if st.session_state.count <= 0:
             st.subheader(f"De {st.session_state.count + 1} colaborador")
@@ -111,13 +109,9 @@ if st.session_state.count <= max_index:
 
     with col2:
         fig_QR = st.image("pixqrcodegen.png", width=300)
-        #st.markdown(f" ==>  {nome} {sobrenome}  -  R$ {colab_valor}")
-        st.subheader(f"==> {nome} {sobrenome}  -  R$ {colab_valor}")
+        st.subheader(f"==> {nome} {sobrenome}  -  R$ {colab_valor:,.2f}".replace(",", "_").replace(".", ",").replace("_", "."))
 else:
     st.header('FIM DO PROCESSO !!')
-    total = f" {st.session_state.total:,.2f}"
-    total = total.replace(".","_")
-    total = total.replace(",",".")
-    total = total.replace("_",",")
+    total = f"{st.session_state.total:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
     st.title(f"Foi processado um Total de : R$ :red[{total}]")
     st.title(f"pagos a {st.session_state.count} colaboradores")
