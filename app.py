@@ -4,15 +4,22 @@ import runpy
 st.set_page_config(layout=  "wide",
                    page_title='Executor da Folha do 1RIFsa', page_icon="🖋️")
 
+### Título da página
+col1, col2 = st.columns([5, 1])
+with col1:
+    st.title('Executor de Folha para o 1º RI de Feira de Santana')
+with col2:
+    fig_Logo = st.image("1rifsa.jpeg", width=100)
+
 def home():
-    st.title("Bem-vindo ao PagaFolha")
-    st.write("Esta aplicação irá processar os dados da folha de pagamento.")
+    st.title("Bem-vindo!! Aqui iniciamos o processo...")   #Bem-vindo ao PagaFolha")
+    st.write("Esta aplicação irá processar os dados da folha de pagamento. Cliuqe no botão Avançar abaixo para iniciar.")
     if st.button("Avançar"):
         st.session_state.page = "extracao"
         st.rerun()
 
 def extracao():
-    st.title("Processo de Extração")
+    st.title("Extração dos Dados")
     st.write("Esse processo irá executar a extração dos dados da Folha através do arquivo enviado pela Contas.")
     
     # Executa o script import_folha_GUI.py

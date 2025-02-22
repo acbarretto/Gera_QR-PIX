@@ -10,12 +10,12 @@ from pixqrcodegen import Payload
 #                    page_title='Executor da Folha do 1RIFsa', page_icon="🖋️")
 
 
-### Título da página
-col1, col2 = st.columns([5, 1])
-with col1:
-    st.title('Executor de Folha para o 1º RI de Feira de Santana')
-with col2:
-    fig_Logo = st.image("1rifsa.jpeg", width=100)
+# ### Título da página
+# col1, col2 = st.columns([5, 1])
+# with col1:
+#     st.title('Executor de Folha para o 1º RI de Feira de Santana')
+# with col2:
+#     fig_Logo = st.image("1rifsa.jpeg", width=100)
 
 df_folha = pd.read_csv("folha.csv", sep=";")
 
